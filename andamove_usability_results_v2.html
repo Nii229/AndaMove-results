@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AndaMove – Usability Testing Results</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #f4f7f5;
+    color: #2c2c2a;
+    padding: 0;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(135deg, #085041 0%, #1D9E75 100%);
+    color: #fff;
+    padding: 48px 24px 40px;
+    text-align: center;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 20px;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    margin-bottom: 16px;
+    color: rgba(255,255,255,0.9);
+  }
+  .hero h1 {
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .hero h1 span { color: #9FE1CB; }
+  .hero .tagline {
+    font-size: 15px;
+    color: rgba(255,255,255,0.78);
+    max-width: 480px;
+    margin: 0 auto 20px;
+    line-height: 1.6;
+  }
+  .hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+  .pill {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    font-size: 12px;
+    padding: 4px 12px;
+    color: rgba(255,255,255,0.88);
+  }
+
+  /* ── Layout ── */
+  .content { max-width: 720px; margin: 0 auto; padding: 32px 20px 60px; }
+
+  .section { margin-bottom: 36px; }
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #0F6E56;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #d3d1c7;
+  }
+
+  /* ── Metric cards ── */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .metric {
+    background: #fff;
+    border: 0.5px solid #d3d1c7;
+    border-radius: 12px;
+    padding: 18px 14px;
+    text-align: center;
+  }
+  .metric .mlabel { font-size: 11px; color: #888780; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+  .metric .mvalue { font-size: 36px; font-weight: 700; line-height: 1; margin-bottom: 4px; }
+  .metric .msub   { font-size: 11px; color: #888780; }
+  .v-teal   { color: #0F6E56; }
+  .v-blue   { color: #185FA5; }
+  .v-purple { color: #534AB7; }
+
+  /* ── Chart cards ── */
+  .chart-card {
+    background: #fff;
+    border: 0.5px solid #d3d1c7;
+    border-radius: 12px;
+    padding: 22px 20px 16px;
+    margin-bottom: 16px;
+  }
+  .chart-title { font-size: 13px; font-weight: 600; color: #444441; margin-bottom: 10px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 12px; }
+  .legend span { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #5f5e5a; }
+  .ldot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+  .chart-inner { position: relative; width: 100%; }
+  .h280 { height: 280px; }
+  .h180 { height: 180px; }
+  .h220 { height: 220px; }
+
+  /* ── Insight box ── */
+  .insight {
+    background: #e1f5ee;
+    border-left: 3px solid #1D9E75;
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-top: 4px;
+  }
+  .insight-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .insight p { font-size: 13px; color: #085041; line-height: 1.7; }
+  .insight strong { font-weight: 600; }
+
+  /* ── Qualitative cards ── */
+  .qual-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 12px;
+  }
+  .qual-card {
+    background: #fff;
+    border: 0.5px solid #d3d1c7;
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .qual-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .qi-teal   { background: #d4f3e8; }
+  .qi-blue   { background: #dbeeff; }
+  .qi-purple { background: #eeedfe; }
+  .qual-card h3 { font-size: 13px; font-weight: 600; color: #2c2c2a; margin-bottom: 4px; }
+  .qual-card p  { font-size: 12px; color: #5f5e5a; line-height: 1.5; }
+  .quote {
+    font-size: 11px;
+    color: #0F6E56;
+    font-style: italic;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 0.5px solid #d3d1c7;
+  }
+
+  /* ── Improvement chart ── */
+  .improv-list { display: flex; flex-direction: column; gap: 10px; padding: 4px 0; }
+  .improv-row { display: flex; align-items: center; gap: 12px; }
+  .improv-label { font-size: 12px; color: #444441; width: 200px; flex-shrink: 0; }
+  .bar-track { flex: 1; background: #f1efe8; border-radius: 20px; height: 10px; overflow: hidden; }
+  .bar-fill  { height: 100%; border-radius: 20px; background: #378ADD; transition: width 1s ease; }
+  .bar-count { font-size: 12px; color: #888780; width: 40px; text-align: right; flex-shrink: 0; }
+
+  /* ── Footer ── */
+  .footer {
+    background: #085041;
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    padding: 28px 24px;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  .footer strong { color: #fff; font-weight: 600; }
+  .footer .divider { margin: 0 8px; opacity: 0.4; }
+
+  @media (max-width: 480px) {
+    .metrics { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 26px; }
+    .improv-label { width: 140px; font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-badge">Final Year Project · CS-88</div>
+  <h1><span>AndaMove</span></h1>
+  <p class="tagline">A GPS-based mobile travel planning app that organises your chosen Phuket destinations into a realistic, time-efficient day itinerary — ranked by real distance and travel time, not popularity.</p>
+  <div class="hero-pills">
+    <span class="pill">🗺️ GPS Tracking</span>
+    <span class="pill">⏱️ Travel-Time Aware</span>
+    <span class="pill">🔄 Route Optimisation</span>
+    <span class="pill">🌴 Phuket-Focused</span>
+    <span class="pill">📱 Flutter · Firebase</span>
+  </div>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<div class="content">
+
+  <!-- Metric summary -->
+  <div class="section">
+    <div class="section-label">Testing overview</div>
+    <div class="metrics">
+      <div class="metric">
+        <div class="mlabel">Overall average</div>
+        <div class="mvalue v-teal">4.69</div>
+        <div class="msub">out of 5.0</div>
+      </div>
+      <div class="metric">
+        <div class="mlabel">Participants</div>
+        <div class="mvalue v-blue">30</div>
+        <div class="msub">May – June 2026</div>
+      </div>
+      <div class="metric">
+        <div class="mlabel">Min score</div>
+        <div class="mvalue v-purple">4.2</div>
+        <div class="msub">all above 4.0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bar chart -->
+  <div class="section">
+    <div class="section-label">Scores per question</div>
+    <div class="chart-card">
+      <div class="chart-title">Average score per question (Q1–Q10 · scale 1–5)</div>
+      <div class="legend">
+        <span><span class="ldot" style="background:#1D9E75;"></span>Section 1 – Perceived ease of use (TAM)</span>
+        <span><span class="ldot" style="background:#378ADD;"></span>Section 2 – General system usability (SUS)</span>
+      </div>
+      <div class="chart-inner h280">
+        <canvas id="barChart" role="img" aria-label="Bar chart of average scores Q1 to Q10, all between 4.6 and 4.8.">Q1:4.8, Q2:4.7, Q3:4.7, Q4:4.6, Q5:4.6, Q6:4.6, Q7:4.7, Q8:4.7, Q9:4.8, Q10:4.8</canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Line chart -->
+  <div class="section">
+    <div class="section-label">Individual scores</div>
+    <div class="chart-card">
+      <div class="chart-title">Overall average score per participant (n = 30)</div>
+      <div class="legend">
+        <span><span class="ldot" style="background:#1D9E75; border-radius:50%;"></span>Individual overall average</span>
+      </div>
+      <div class="chart-inner h180">
+        <canvas id="lineChart" role="img" aria-label="Line chart showing all 30 participant scores between 4.2 and 5.0.">Scores 4.2–5.0 across 30 participants.</canvas>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-icon">✅</div>
+      <p>All 30 participants rated AndaMove above <strong>4.2 / 5.0</strong>. With an overall mean of <strong>4.69</strong>, the app achieves an <strong>Excellent</strong> usability standard — confirming it is intuitive and practical for tourists visiting Phuket.</p>
+    </div>
+  </div>
+
+  <!-- Qualitative highlights -->
+  <div class="section">
+    <div class="section-label">What users loved most</div>
+    <div class="qual-grid">
+      <div class="qual-card">
+        <div class="qual-icon qi-teal">🗺️</div>
+        <h3>Route planning</h3>
+        <p>Users found the itinerary generation intuitive and fast — the most praised feature overall.</p>
+        <div class="quote">"Route planning feature is intuitive"</div>
+      </div>
+      <div class="qual-card">
+        <div class="qual-icon qi-blue">🗾</div>
+        <h3>Map integration</h3>
+        <p>The live Google Maps view with real road polylines gave users confidence in navigating Phuket.</p>
+        <div class="quote">"The map integration is very helpful"</div>
+      </div>
+      <div class="qual-card">
+        <div class="qual-icon qi-purple">📍</div>
+        <h3>GPS accuracy</h3>
+        <p>Real-time location tracking and travel-time estimates were highlighted as standout strengths.</p>
+        <div class="quote">"Love the travel time estimates"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Improvement requests chart -->
+  <div class="section">
+    <div class="section-label">Top improvement suggestions</div>
+    <div class="chart-card">
+      <div class="chart-title">Most requested features from participants (Q13)</div>
+      <div class="improv-list" id="improvList"></div>
+    </div>
+  </div>
+
+  <!-- Section breakdown chart -->
+  <div class="section">
+    <div class="section-label">Section comparison</div>
+    <div class="chart-card">
+      <div class="chart-title">Section 1 vs Section 2 average scores across all participants</div>
+      <div class="chart-inner h220">
+        <canvas id="sectionChart" role="img" aria-label="Bar chart comparing Section 1 average 4.68 vs Section 2 average 4.71 per participant.">Section 1 avg 4.68, Section 2 avg 4.71 per participant.</canvas>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── FOOTER ── -->
+<div class="footer">
+  <strong>Nur Fatini binti Mahamad Razali</strong> (301193)<br>
+  Bachelor of Computer Science · Universiti Utara Malaysia<br>
+  <span class="divider">|</span>
+  Supervisor: <strong>Suwannit Chareen Chit A/L Sop Chit</strong>
+  <span class="divider">|</span>
+  Project ID: CS-88
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+  const gridColor = 'rgba(128,128,128,0.10)';
+  const tickColor = '#888780';
+  const teal  = '#1D9E75';
+  const blue  = '#378ADD';
+  const yOpts = {
+    min: 4.0, max: 5.0,
+    grid: { color: gridColor },
+    ticks: { color: tickColor, font: { size: 11 }, stepSize: 0.2, callback: v => v.toFixed(1) }
+  };
+
+  /* Bar chart – Q1–Q10 */
+  new Chart(document.getElementById('barChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Q1\nUseful & Easy','Q2\nDo What\nI Want','Q3\nClear\nInteraction','Q4\nBecome\nSkilful','Q5\nEasy\nNavigate','Q6\nUse\nFrequently','Q7\nWell\nIntegrated','Q8\nLearn\nQuickly','Q9\nFeel\nConfident','Q10\nComplete\nTasks'],
+      datasets: [
+        {
+          label: 'Section 1',
+          data: [4.8, 4.7, 4.7, 4.6, null, null, null, null, null, null],
+          backgroundColor: teal + 'CC', borderColor: teal, borderWidth: 1.5,
+          borderRadius: 6, borderSkipped: false,
+        },
+        {
+          label: 'Section 2',
+          data: [null, null, null, null, 4.6, 4.6, 4.7, 4.7, 4.8, 4.8],
+          backgroundColor: blue + 'CC', borderColor: blue, borderWidth: 1.5,
+          borderRadius: 6, borderSkipped: false,
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => ' ' + c.dataset.label + ': ' + (c.parsed.y ? c.parsed.y.toFixed(1) : '') } }
+      },
+      scales: {
+        x: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 9 }, autoSkip: false, maxRotation: 0 } },
+        y: yOpts
+      }
+    }
+  });
+
+  /* Line chart – per participant */
+  const scores = [4.9,4.6,4.7,4.8,4.5,4.7,4.9,4.5,4.5,4.5,4.6,4.4,4.9,4.9,4.2,4.8,4.9,5.0,4.5,4.6,4.6,4.7,4.4,4.5,4.9,4.9,5.0,4.8,4.7,4.9];
+  new Chart(document.getElementById('lineChart'), {
+    type: 'line',
+    data: {
+      labels: scores.map((_, i) => 'P' + (i + 1)),
+      datasets: [{
+        label: 'Overall avg',
+        data: scores,
+        borderColor: teal,
+        backgroundColor: teal + '22',
+        borderWidth: 2,
+        pointRadius: 4,
+        pointBackgroundColor: '#fff',
+        pointBorderColor: teal,
+        pointBorderWidth: 2,
+        fill: true,
+        tension: 0.35,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => ' Score: ' + c.parsed.y.toFixed(1) } }
+      },
+      scales: {
+        x: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 9 }, autoSkip: true, maxTicksLimit: 10 } },
+        y: yOpts
+      }
+    }
+  });
+
+  /* Section comparison – grouped bar per participant */
+  const s1 = [5.0,4.6,4.8,4.8,4.6,4.8,5.0,4.2,4.6,4.8,4.6,4.2,5.0,5.0,4.0,4.6,4.8,5.0,4.2,4.8,4.6,4.6,4.2,4.4,4.8,5.0,5.0,4.8,4.8,4.8];
+  const s2 = [4.8,4.6,4.6,4.8,4.4,4.6,4.8,4.8,4.4,4.2,4.6,4.6,4.8,4.8,4.4,5.0,5.0,5.0,4.8,4.4,4.6,4.8,4.6,4.6,5.0,4.8,5.0,4.8,4.6,5.0];
+  new Chart(document.getElementById('sectionChart'), {
+    type: 'bar',
+    data: {
+      labels: scores.map((_, i) => 'P' + (i + 1)),
+      datasets: [
+        { label: 'Section 1 – Ease of use', data: s1, backgroundColor: teal + 'AA', borderColor: teal, borderWidth: 1, borderRadius: 3 },
+        { label: 'Section 2 – Usability',   data: s2, backgroundColor: blue  + 'AA', borderColor: blue,  borderWidth: 1, borderRadius: 3 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => ' ' + c.dataset.label + ': ' + c.parsed.y.toFixed(1) } }
+      },
+      scales: {
+        x: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 8 }, autoSkip: true, maxTicksLimit: 15 } },
+        y: { ...yOpts, min: 3.8 }
+      }
+    }
+  });
+
+  /* Improvement suggestions bar chart (manual) */
+  const improvements = [
+    { label: 'More place descriptions', count: 8 },
+    { label: 'User reviews for POIs',   count: 8 },
+    { label: 'Push notifications',      count: 5 },
+    { label: 'Filter by opening hours', count: 4 },
+    { label: 'Photo upload for trips',  count: 3 },
+    { label: 'More transport modes',    count: 2 },
+    { label: 'Offline map support',     count: 2 },
+    { label: 'More POI categories',     count: 1 },
+  ];
+  const maxCount = improvements[0].count;
+  const list = document.getElementById('improvList');
+  improvements.forEach(item => {
+    const pct = Math.round((item.count / maxCount) * 100);
+    list.innerHTML += `
+      <div class="improv-row">
+        <div class="improv-label">${item.label}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${pct}%;"></div></div>
+        <div class="bar-count">${item.count}</div>
+      </div>`;
+  });
+</script>
+</body>
+</html>
